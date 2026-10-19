@@ -34,3 +34,38 @@ async function buscarPokemon(nombre) {
 }
 
 
+function renderPokemon(data) {
+  const tipos = data.types
+    .map((t) => `<span class="tipo">${t.type.name}</span>`)
+    .join("");
+
+  const stats = data.stats
+    .map(
+      (s) => `<li><span>${s.stat.name}</span><strong>${s.base_stat}</strong></li>`
+    )
+    .join("");
+
+  resultado.innerHTML = `
+    <article class="pokemon-card">
+      <h2>${data.name}</h2>
+      <p class="pokemon-id">#${data.id}</p>
+      <img
+        class="pokemon-img"
+        src="${data.sprites.other["official-artwork"].front_default}"
+        alt="${data.name}"
+      >
+      <div class="tipos">${tipos}</div>
+      <div class="medidas">
+        <span>Altura: ${data.height / 10} m</span>
+        <span>Peso: ${data.weight / 10} kg</span>
+      </div>
+      <ul class="stats">${stats}</ul>
+    </article>
+  `;
+}
+
+
+function mostrarMensaje(texto, esError = false) {
+  mensaje.textContent = texto;
+  mensaje.classList.toggle("error", esError);
+}
